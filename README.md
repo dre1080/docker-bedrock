@@ -1,4 +1,4 @@
-# [Bedrock](https://roots.io/bedrock) Docker Build Image
+# Bedrock Docker Build Image
 
 [hub]: https://hub.docker.com/r/dre1080/bedrock
 
