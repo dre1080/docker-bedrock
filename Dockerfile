@@ -51,6 +51,8 @@ COPY --from=modsec /usr/local/apache2/modules/mod_security3.so /usr/lib/apache2/
 COPY --from=modsec /opt/owasp-modsecurity-crs-3.2 /opt/owasp-modsecurity-crs-3.2
 COPY --from=modsec /etc/modsecurity.d /etc/modsecurity.d
 
+RUN echo 'SecAction "id:900130,phase:1,nolog,pass,t:none, setvar:tx.crs_exclusions_wordpress=1"' > /etc/modsecurity.d/owasp-crs/crs-setup.conf
+
 RUN echo 'LoadModule security3_module "/usr/lib/apache2/modules/mod_security3.so"' > /etc/apache2/mods-available/security.load
 
 RUN { \
