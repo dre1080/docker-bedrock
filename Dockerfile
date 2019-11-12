@@ -68,3 +68,7 @@ ONBUILD COPY . /var/www/html
 # Install composer dependencies
 ONBUILD RUN composer install \
 	--prefer-dist --no-scripts --no-dev --optimize-autoloader
+	
+# Fix permissions
+ONBUILD RUN chmod 777 -R /var/www/html/web/app/uploads
+ONBUILD RUN usermod -u 1000 www-data
