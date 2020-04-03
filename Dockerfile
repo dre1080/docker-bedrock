@@ -92,6 +92,7 @@ RUN { \
 
 # Setup composer
 COPY --from=composer /usr/bin/composer /usr/bin/composer
+RUN composer global require hirak/prestissimo
 
 # Setup wait-for
 ADD https://raw.githubusercontent.com/eficode/wait-for/master/wait-for /usr/local/bin/
