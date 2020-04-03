@@ -7,7 +7,8 @@ ENV APACHE_DOCUMENT_ROOT=/var/www/html/web
 # Allow composer to run as root
 ENV COMPOSER_ALLOW_SUPERUSER=1
 
-RUN apt-get update && \
+RUN set -ex; \
+	apt-get update; \
 	apt-get install -y --no-install-recommends \
 		git \
 		libjpeg-dev \
