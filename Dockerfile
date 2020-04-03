@@ -20,7 +20,8 @@ RUN set -ex; \
 		apt-transport-https \
 		ca-certificates \
 		build-essential \
-		libicu-dev
+		libicu-dev \
+		netcat
 
 # Install/Configure PHP extensions
 RUN docker-php-ext-configure gd --with-freetype --with-jpeg; \
@@ -28,7 +29,7 @@ RUN docker-php-ext-configure gd --with-freetype --with-jpeg; \
 	docker-php-ext-install -j $(nproc) gd mysqli opcache zip bcmath exif intl
 
 # Clean up
-RUN apt-get clean && \
+RUN apt-get clean; \
 	rm -rf /var/lib/apt/lists/*
 
 # Setup Apache
