@@ -14,7 +14,7 @@ and an improved folder structure
 ### Create a `Dockerfile` in your [Bedrock](https://roots.io/bedrock) project
 
 ```dockerfile
-FROM dre1080/bedrock:onbuild
+FROM dre1080/bedrock
 ```
 
 ## Configuration
