@@ -98,5 +98,4 @@ ONBUILD RUN composer install \
 	--prefer-dist --no-scripts --no-dev --optimize-autoloader
 	
 # Fix permissions
-ONBUILD RUN chmod 777 -R /var/www/html/web/app/uploads
-ONBUILD RUN usermod -u 1000 www-data
+ONBUILD RUN chown -R www-data:www-data /var/www/html && chmod -R 755 /var/www/html
