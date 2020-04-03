@@ -1,4 +1,4 @@
-FROM php:apache
+FROM php:7.4-apache
 LABEL maintainer="ando <lifeandcoding@gmail.com>"
 
 # Apache doc root
@@ -14,6 +14,7 @@ RUN apt-get update && \
 		subversion \
 		libjpeg-dev \
 		libpng-dev \
+		libfreetype6-dev \
 		zlib1g-dev \
 		libzip-dev \
 		gnupg \
@@ -22,8 +23,8 @@ RUN apt-get update && \
 		build-essential
 
 # Install PHP extensions
-RUN docker-php-ext-configure gd --with-png-dir=/usr --with-jpeg-dir=/usr && \
-	docker-php-ext-install gd mysqli opcache zip bcmath exif
+RUN docker-php-ext-configure gd --with-freetype --with-jpeg; \
+	docker-php-ext-install -j $(nproc) gd mysqli opcache zip bcmath exif
 
 # Clean up
 RUN apt-get clean && \
