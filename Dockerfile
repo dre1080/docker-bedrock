@@ -21,7 +21,8 @@ RUN set -ex; \
 		ca-certificates \
 		build-essential \
 		libicu-dev \
-		netcat
+		netcat \
+		unzip
 
 # Install/Configure PHP extensions
 RUN docker-php-ext-configure gd --with-freetype --with-jpeg; \
