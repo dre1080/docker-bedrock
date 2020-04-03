@@ -90,6 +90,10 @@ RUN { \
 # Setup composer
 COPY --from=composer /usr/bin/composer /usr/bin/composer
 
+# Setup wait-for
+ADD https://raw.githubusercontent.com/eficode/wait-for/master/wait-for /usr/local/bin/
+RUN chmod +x /usr/local/bin/wait-for
+
 # Copy codebase
 ONBUILD COPY . /var/www/html
 
