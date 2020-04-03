@@ -60,19 +60,19 @@ RUN mv $PHP_INI_DIR/php.ini-production $PHP_INI_DIR/php.ini
 # set recommended PHP.ini settings
 # see https://secure.php.net/manual/en/opcache.installation.php
 RUN { \
-	echo 'opcache.memory_consumption=128'; \
-	echo 'opcache.interned_strings_buffer=8'; \
-	echo 'opcache.max_accelerated_files=4000'; \
-	echo 'opcache.revalidate_freq=2'; \
-	echo 'opcache.fast_shutdown=1'; \
+		echo 'opcache.memory_consumption=128'; \
+		echo 'opcache.interned_strings_buffer=8'; \
+		echo 'opcache.max_accelerated_files=4000'; \
+		echo 'opcache.revalidate_freq=2'; \
+		echo 'opcache.fast_shutdown=1'; \
 	} > $PHP_INI_DIR/conf.d/opcache-recommended.ini
 
 RUN { \
-	echo 'cgi.fix_pathinfo=0'; \
-	echo 'memory_limit=512M'; \
-	echo 'post_max_size=10M'; \
-	echo 'upload_max_filesize=10M'; \
-	echo 'sendmail_path=/usr/sbin/sendmail -S mail:1025'; \
+		echo 'cgi.fix_pathinfo=0'; \
+		echo 'memory_limit=512M'; \
+		echo 'post_max_size=10M'; \
+		echo 'upload_max_filesize=10M'; \
+		echo 'sendmail_path=/usr/sbin/sendmail -S mail:1025'; \
 	} > $PHP_INI_DIR/conf.d/core-recommended.ini
 
 RUN { \
@@ -96,6 +96,6 @@ ONBUILD COPY . /var/www/html
 # Install composer dependencies
 ONBUILD RUN composer install \
 	--prefer-dist --no-scripts --no-dev --optimize-autoloader
-	
+
 # Fix permissions
 ONBUILD RUN chown -R www-data:www-data /var/www/html && chmod -R 755 /var/www/html
