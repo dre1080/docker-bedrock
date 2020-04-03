@@ -34,7 +34,24 @@ RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-av
 RUN sed -ri -e 's!/var/www/!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/apache2.conf /etc/apache2/conf-available/*.conf
 
 # Enable Apache modules
-RUN a2enmod rewrite
+RUN set -eux; \
+	a2enmod rewrite expires; \
+	\
+	# https://httpd.apache.org/docs/2.4/mod/mod_remoteip.html
+	a2enmod remoteip; \
+	{ \
+		echo 'RemoteIPHeader X-Forwarded-For'; \
+		# these IP ranges are reserved for "private" use and should thus *usually* be safe inside Docker
+		echo 'RemoteIPTrustedProxy 10.0.0.0/8'; \
+		echo 'RemoteIPTrustedProxy 172.16.0.0/12'; \
+		echo 'RemoteIPTrustedProxy 192.168.0.0/16'; \
+		echo 'RemoteIPTrustedProxy 169.254.0.0/16'; \
+		echo 'RemoteIPTrustedProxy 127.0.0.0/8'; \
+	} > /etc/apache2/conf-available/remoteip.conf; \
+	a2enconf remoteip; \
+# https://github.com/docker-library/wordpress/issues/383#issuecomment-507886512
+# (replace all instances of "%h" with "%a" in LogFormat)
+	find /etc/apache2 -type f -name '*.conf' -exec sed -ri 's/([[:space:]]*LogFormat[[:space:]]+"[^"]*)%h([^"]*")/\1%a\2/g' '{}' +
 
 # Use the default production configuration
 RUN mv $PHP_INI_DIR/php.ini-production $PHP_INI_DIR/php.ini
