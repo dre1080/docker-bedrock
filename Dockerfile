@@ -19,11 +19,13 @@ RUN set -ex; \
 		gnupg \
 		apt-transport-https \
 		ca-certificates \
-		build-essential
+		build-essential \
+		libicu-dev
 
-# Install PHP extensions
+# Install/Configure PHP extensions
 RUN docker-php-ext-configure gd --with-freetype --with-jpeg; \
-	docker-php-ext-install -j $(nproc) gd mysqli opcache zip bcmath exif
+	docker-php-ext-configure intl; \
+	docker-php-ext-install -j $(nproc) gd mysqli opcache zip bcmath exif intl
 
 # Clean up
 RUN apt-get clean && \
