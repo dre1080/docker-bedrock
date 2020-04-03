@@ -10,8 +10,6 @@ ENV COMPOSER_ALLOW_SUPERUSER=1
 RUN apt-get update && \
 	apt-get install -y --no-install-recommends \
 		git \
-		mercurial \
-		subversion \
 		libjpeg-dev \
 		libpng-dev \
 		libfreetype6-dev \
